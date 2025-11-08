@@ -1,38 +1,471 @@
-.App {
-  text-align: center;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  line-height: 1.6;
+  color: #333;
+  padding-top: 100px; /* Further reduced padding for smaller logo */
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+/* Header Styles */
+.header {
+  background: #ffffff;
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.08);
+  padding: 0.45rem 0; /* Reduced header padding to tighten vertical space */
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  backdrop-filter: blur(10px);
+  transition: all 0.3s ease;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.header.scrolled {
+  padding: 0.5rem 0;
+}
+
+.header-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
+  gap: 0; /* Remove gap so navbar sits directly under logo */
+  transition: all 0.3s ease;
+}
+
+.header.scrolled .header-container {
+  flex-direction: row;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.logo-container {
+  text-align: center;
+  transition: all 0.3s ease;
+}
+
+.header.scrolled .logo-container {
+  display: none; /* Hide main logo when scrolled */
+}
+
+.logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 3px solid #667eea;
+  padding: 2px;
+  background: white;
+  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  transition: all 0.3s ease;
+}
+
+.logo:hover {
+  transform: scale(1.05);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  border-color: #764ba2;
+}
+
+/* Navbar Styles */
+.navbar {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: -6px; /* Pull navbar up to reduce white gap under logo */
+  padding: 0.8rem 1.5rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.3);
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+}
+
+.header.scrolled .navbar {
+  width: auto;
+  flex: 1;
+  margin: 0;
+}
+
+/* Logo in navbar when scrolled */
+.nav-logo {
+  display: none;
+}
+
+.header.scrolled .nav-logo {
+  display: block;
+  margin-right: 1.5rem;
+}
+
+.navbar-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid white;
+  background: white;
+}
+
+.nav-left {
+  display: flex;
+  gap: 0;
+  margin-left: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.nav-left a {
+  text-decoration: none;
   color: white;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 0.6rem 1.5rem;
+  border-radius: 0;
+  transition: all 0.3s ease;
+  position: relative;
+  background: transparent;
 }
 
-.App-link {
-  color: #61dafb;
+.nav-left a::before {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 2px;
+  background: linear-gradient(45deg, #ff6b6b, #ffd93d);
+  transition: width 0.3s ease;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
+.nav-left a:hover::before {
+  width: 60%;
+}
+
+.nav-left a:hover {
+  color: #ffd93d;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.nav-right {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.login-btn {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+  color: white;
+  border: none;
+  padding: 0.6rem 2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(255, 107, 107, 0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.login-btn::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+  transition: left 0.5s;
+}
+
+.login-btn:hover::before {
+  left: 100%;
+}
+
+.login-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.6);
+  background: linear-gradient(45deg, #ff5252, #ff7b7b);
+}
+
+/* Active State for Nav Items */
+.nav-left a.active {
+  color: #ffd93d;
+}
+
+.nav-left a.active::before {
+  width: 60%;
+}
+
+/* Responsive Design for Navbar */
+@media (max-width: 768px) {
+  body {
+    padding-top: 120px;
   }
-  to {
-    transform: rotate(360deg);
+  
+  .header-container {
+    padding: 0 1rem;
+    gap: 0.3rem;
+  }
+  
+  .navbar {
+    flex-direction: column;
+    gap: 0.8rem;
+    padding: 1rem;
+    border-radius: 10px;
+  }
+  
+  .header.scrolled .navbar {
+    flex-direction: column;
+    width: 100%;
+  }
+  
+  .nav-logo {
+    display: none !important; /* Hide navbar logo on mobile */
+  }
+  
+  .nav-left {
+    margin-left: 0;
+    gap: 0.3rem;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .nav-left a {
+    padding: 0.5rem 1rem;
+    font-size: 0.9rem;
+  }
+  
+  .nav-right {
+    margin-right: 0;
+  }
+  
+  .logo {
+    width: 48px;
+    height: 48px;
+  }
+  
+  .login-btn {
+    padding: 0.5rem 1.5rem;
+    font-size: 0.9rem;
   }
 }
+
+/* Banner Styles */
+.banner {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  padding: 5rem 2rem;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  margin-top: 0; /* Remove any margin */
+}
+
+.banner-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.banner-text h1 {
+  font-size: 3.5rem;
+  margin-bottom: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.banner-text p {
+  font-size: 1.3rem;
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.cta-button {
+  background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+  color: white;
+  border: none;
+  padding: 0.8rem 1.8rem; /* Reduced padding for a smaller button */
+  font-size: 1rem; /* Slightly smaller font */
+  border-radius: 30px; /* Less pill-like */
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+.cta-button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(255, 107, 107, 0.6);
+}
+
+.banner-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.banner-image img {
+  width: 100%;
+  max-width: 500px;
+  height: 350px;
+  object-fit: cover;
+  border-radius: 15px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+  border: 5px solid rgba(255, 255, 255, 0.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .banner-content {
+    grid-template-columns: 1fr;
+    text-align: center;
+    gap: 2rem;
+  }
+  
+  .banner-text h1 {
+    font-size: 2.5rem;
+  }
+  
+  .banner {
+    padding: 3rem 1rem;
+  }
+  
+  .banner-image img {
+    height: 250px;
+    max-width: 100%;
+  }
+
+  /* Make CTA smaller on mobile */
+  .cta-button {
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
+    border-radius: 26px;
+  }
+}
+
+/* Rest of your existing CSS for cards, login etc. remains same */
+.cards-section {
+  padding: 6rem 2rem;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+}
+
+.cards-section h2 {
+  text-align: center;
+  margin-bottom: 4rem;
+  font-size: 3rem;
+  color: #2d3748;
+  font-weight: 700;
+  position: relative;
+}
+
+.cards-section h2::after {
+  content: '';
+  position: absolute;
+  bottom: -15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100px;
+  height: 4px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  border-radius: 2px;
+}
+
+.cards-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 3rem;
+}
+
+.card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  padding: 2.5rem;
+  text-align: center;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 5px;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 25px 50px rgba(0,0,0,0.15);
+}
+
+.card img {
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-radius: 15px;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+.card h3 {
+  margin-bottom: 1rem;
+  color: #2d3748;
+  font-size: 1.5rem;
+  font-weight: 600;
+}
+
+.card p {
+  color: #718096;
+  margin-bottom: 2rem;
+  line-height: 1.7;
+  font-size: 1.1rem;
+}
+
+.see-more-btn {
+  background: transparent;
+  color: #667eea;
+  border: 2px solid #667eea;
+  padding: 0.8rem 2rem;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.see-more-btn:hover {
+  background: #667eea;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(102, 126, 234, 0.3);
+}
+
+/* Keep your existing login CSS as it is */
+/* ... rest of your login CSS ... */
