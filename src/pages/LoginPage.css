@@ -5,11 +5,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  /*background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);*/
   position: relative;
-  /* Change to visible to allow avatar to show */
-  overflow: visible;
-  /* Add padding to top to accommodate avatar */
-  padding-top: 60px;
+  overflow: hidden;
 }
 
 .login-page::before {
@@ -46,13 +44,11 @@
   position: relative;
   width: 100%;
   max-width: 420px;
-  /* Add margin-top to ensure space for avatar */
-  margin-top: 30px;
 }
 
 .avatar-wrap {
   position: absolute;
-  top: -60px;
+  top: -50px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
@@ -332,4 +328,67 @@
     gap: 0.8rem;
     align-items: flex-start;
   }
+}
+
+
+
+
+/* Name Grid - First Name + Last Name side by side */
+.name-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Mobile Number Field Styling */
+.form-group:has(input[type="tel"]) {
+  margin-bottom: 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .name-grid {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+}
+
+
+
+/* Register Page Footer - Only REGISTER NOW button */
+.card-footer-register {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 1.5rem;
+  border-top: 1px solid #eee;
+}
+
+.register-now-btn {
+  background: linear-gradient(45deg, #007bff, #0056b3);
+  color: white;
+  border: none;
+  padding: 1rem 3rem;
+  border-radius: 25px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.register-now-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(0, 123, 255, 0.4);
+}
+
+/* Hide card-footer in register mode */
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem;
+  border-top: 1px solid #eee;
 }
