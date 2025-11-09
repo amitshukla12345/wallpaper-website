@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import logo from '../assets/logo.png';
 import SuccessPopup from '../components/SuccessPopup';
+import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
 
 const LoginPage = () => {
@@ -16,6 +17,7 @@ const LoginPage = () => {
   const [showPopup, setShowPopup] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const { register, login } = useAuth();
+   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -59,6 +61,10 @@ const LoginPage = () => {
       setPassword('');
       setMobileNumber('');
     }
+  };
+
+  const handleHomeClick = () => {
+    navigate('/'); // Home page par navigate karega
   };
 
   return (
@@ -186,9 +192,13 @@ const LoginPage = () => {
               {/* Card Footer - Only show buttons in Login mode */}
               {isLogin && (
                 <div className="card-footer">
-                  {/* Left Side - Home Button */}
-                  <button type="button" className="home-btn">Home</button>
-
+                  <button 
+                    type="button" 
+                    className="home-btn"
+                    onClick={handleHomeClick} // ✅ onClick handler add kiya
+                  >
+                    Home
+                  </button>
                   {/* Center - Login Button */}
                   <button type="submit" className="login-submit-btn">
                     LOGIN
