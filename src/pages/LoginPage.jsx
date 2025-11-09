@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useAuth } from '../AuthContext';
 import logo from '../assets/logo.png';
+import googleContactsIcon from '../assets/Contacts_logo.png';
 import SuccessPopup from '../components/SuccessPopup';
 import { useNavigate } from 'react-router-dom';
 import './LoginPage.css';
@@ -47,6 +48,7 @@ const LoginPage = () => {
         setError('Invalid email or password');
       }
     } else {
+      // Register mode mein mobile number required hai
       if (!firstName || !lastName || !mobileNumber) {
         setError('Please fill all fields');
         return;
@@ -73,7 +75,11 @@ const LoginPage = () => {
         <div className="login-form-container">
           {/* Avatar overlapping card */}
           <div className="avatar-wrap">
-            <img src={logo} alt="logo" className="login-avatar" />
+            <img 
+              src={isLogin ? logo : googleContactsIcon} 
+              alt="logo" 
+              className="login-avatar" 
+            />
           </div>
 
           <div className="card">
@@ -124,7 +130,21 @@ const LoginPage = () => {
                       </div>
                     </div>
 
-                    
+                    {/* Mobile Number Field - ONLY IN REGISTER MODE */}
+                    <div className="form-group">
+                      <div className="form-icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
+                        </svg>
+                      </div>
+                      <input 
+                        type="tel"
+                        placeholder="Mobile Number"
+                        value={mobileNumber}
+                        onChange={(e) => setMobileNumber(e.target.value)}
+                        className="form-input"
+                      />
+                    </div>
                   </>
                 )}
 
@@ -168,26 +188,8 @@ const LoginPage = () => {
                     {showPassword ? '👁️' : '👁️‍🗨️'}
                   </button>
                 </div>
-
-                {/* Mobile Number Field */}
-                    <div className="form-group">
-                      <div className="form-icon">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                        </svg>
-                      </div>
-                      <input 
-                        type="tel"
-                        placeholder="Mobile Number"
-                        value={mobileNumber}
-                        onChange={(e) => setMobileNumber(e.target.value)}
-                        className="form-input"
-                      />
-                    </div>
-
-                {/* Remember Me & Forgot Password (Login only) */}
-               
               </div>
+
 
               {/* Card Footer - Only show buttons in Login mode */}
               {isLogin && (
@@ -195,7 +197,7 @@ const LoginPage = () => {
                   <button 
                     type="button" 
                     className="home-btn"
-                    onClick={handleHomeClick} // ✅ onClick handler add kiya
+                    onClick={handleHomeClick}
                   >
                     Home
                   </button>
