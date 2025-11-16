@@ -1,14 +1,22 @@
+/* Reset body and html */
+body, html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden; /* Prevent horizontal scroll */
+}
+
 /* Login Page Styles */
 .login-page {
   min-height: 100vh;
-  width: 100%;
+  width: 100vw; /* ✅ Use viewport width */
   display: flex;
   align-items: center;
   justify-content: center;
   /*background: linear-gradient(135deg, #9f7aea 0%, #667eea 100%);*/
   position: relative;
-  overflow: visible; /* Changed from hidden to visible */
-  padding: 2rem 0; /* Added padding top and bottom */
+  overflow: hidden; /* ✅ Changed from visible to hidden */
+  padding: 0; /* ✅ Remove extra padding */
+  box-sizing: border-box;
 }
 
 .login-page::before {
@@ -35,32 +43,36 @@
 
 .login-container {
   width: 100%;
+  max-width: 420px; /* ✅ Add max-width */
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 2rem; /* Increased top padding */
+  padding: 1rem; /* ✅ Reduced padding */
   position: relative;
   z-index: 2;
+  box-sizing: border-box;
+  margin: 0 auto; /* ✅ Center the container */
 }
 
 .login-form-container {
   position: relative;
   width: 100%;
-  max-width: 420px;
-  margin-top: 2rem; /* Added margin to push container down */
+  max-width: 420px; /* ✅ Add max-width */
+  margin: 2rem auto; /* ✅ Center with margin */
+  box-sizing: border-box;
 }
 
 .avatar-wrap {
   position: absolute;
-  top: -40px; /* Reduced from -50px to -40px */
+  top: -40px;
   left: 50%;
   transform: translateX(-50%);
   z-index: 10;
 }
 
 .login-avatar {
-  width: 90px; /* Reduced from 100px */
-  height: 90px; /* Reduced from 100px */
+  width: 90px;
+  height: 90px;
   border-radius: 50%;
   border: 4px solid white;
   background: white;
@@ -71,12 +83,14 @@
   background: rgba(255, 255, 255, 0.95);
   border-radius: 20px;
   box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
-  padding: 3.5rem 2rem 1.5rem; /* Increased top padding to 3.5rem */
+  padding: 3.5rem 2rem 1.5rem;
   position: relative;
   overflow: hidden;
   backdrop-filter: blur(10px);
   border: 1px solid rgba(255, 255, 255, 0.2);
-  margin-top: 20px; /* Added margin */
+  margin-top: 20px;
+  width: 100%; /* ✅ Ensure full width */
+  box-sizing: border-box; /* ✅ Include padding in width */
 }
 
 .login-title {
@@ -85,10 +99,10 @@
   font-size: 2rem;
   font-weight: 700;
   margin-bottom: 2rem;
-  margin-top: 0.5rem; /* Added margin top */
+  margin-top: 0.5rem;
 }
 
-/* Rest of your existing CSS remains the same */
+/* Form Elements */
 .error-message {
   background: #fed7d7;
   padding: 0.8rem;
@@ -96,6 +110,8 @@
   margin-bottom: 1rem;
   text-align: center;
   border: 1px solid #feb2b2;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .success-message {
@@ -106,15 +122,21 @@
   margin-bottom: 1rem;
   text-align: center;
   border: 1px solid #9ae6b4;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .card-body {
   margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-group {
   position: relative;
   margin-bottom: 1.5rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .form-icon {
@@ -184,41 +206,17 @@
   color: #667eea;
 }
 
-.options-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-top: 1rem;
+/* Name Grid */
+.name-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-.remember {
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-  color: #4a5568;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
-
-.remember input {
-  width: 16px;
-  height: 16px;
-}
-
-.forgot-btn {
-  background: none;
-  border: none;
-  color: #667eea;
-  font-size: 0.9rem;
-  cursor: pointer;
-  text-decoration: underline;
-}
-
-.forgot-btn:hover {
-  color: #764ba2;
-}
-
-/* Footer with three buttons */
+/* Footer Buttons */
 .card-footer {
   display: flex;
   justify-content: space-between;
@@ -227,6 +225,8 @@
   margin-top: 2rem;
   padding-top: 1.5rem;
   border-top: 1px solid #e2e8f0;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .home-btn {
@@ -241,6 +241,7 @@
   transition: all 0.3s ease;
   text-align: center;
   flex: 1;
+  box-sizing: border-box;
 }
 
 .home-btn:hover {
@@ -262,6 +263,7 @@
   flex: 2;
   text-transform: uppercase;
   letter-spacing: 0.5px;
+  box-sizing: border-box;
 }
 
 .login-submit-btn:hover {
@@ -280,6 +282,7 @@
   cursor: pointer;
   transition: all 0.3s ease;
   flex: 1;
+  box-sizing: border-box;
 }
 
 .register-switch-btn:hover {
@@ -288,26 +291,14 @@
   box-shadow: 0 4px 15px rgba(72, 187, 120, 0.4);
 }
 
-/* Name Grid - First Name + Last Name side by side */
-.name-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1rem;
-  margin-bottom: 1rem;
-}
-
-/* Mobile Number Field Styling */
-.form-group:has(input[type="tel"]) {
-  margin-bottom: 1rem;
-}
-
-/* Register Page Footer - Only REGISTER NOW button */
 .card-footer-register {
   display: flex;
   justify-content: center;
   align-items: center;
   padding: 1.5rem;
   border-top: 1px solid #eee;
+  width: 100%;
+  box-sizing: border-box;
 }
 
 .register-now-btn {
@@ -322,6 +313,7 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
+  box-sizing: border-box;
 }
 
 .register-now-btn:hover {
@@ -332,20 +324,21 @@
 /* Responsive Design */
 @media (max-width: 768px) {
   .login-container {
-    padding: 2rem 1rem; /* Increased padding */
+    padding: 1rem;
+    max-width: 90%; /* ✅ Responsive max-width */
   }
   
   .card {
-    padding: 3rem 1.5rem 1rem; /* Increased top padding */
+    padding: 3rem 1.5rem 1rem;
   }
   
   .login-avatar {
-    width: 70px; /* Further reduced for mobile */
+    width: 70px;
     height: 70px;
   }
   
   .avatar-wrap {
-    top: -35px; /* Adjusted for mobile */
+    top: -35px;
   }
   
   .card-footer {
@@ -358,12 +351,6 @@
   .register-switch-btn {
     width: 100%;
     flex: none;
-  }
-  
-  .options-row {
-    flex-direction: column;
-    gap: 0.8rem;
-    align-items: flex-start;
   }
   
   .name-grid {
@@ -389,15 +376,19 @@
   }
   
   .login-page {
-    padding: 1rem 0; /* Adjusted padding for very small screens */
+    padding: 0;
   }
   
   .avatar-wrap {
-    top: -30px; /* Further adjustment for very small screens */
+    top: -30px;
   }
   
   .login-avatar {
     width: 60px;
     height: 60px;
+  }
+  
+  .login-container {
+    max-width: 95%; /* ✅ More responsive on small screens */
   }
 }

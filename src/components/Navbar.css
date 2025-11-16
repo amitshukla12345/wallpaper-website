@@ -102,6 +102,17 @@
   .nav-right {
     margin-left: auto;
   }
+}  
+
+
+.logo {
+  max-width: 150px; /* Desktop */
+}
+
+@media (max-width: 768px) {
+  .logo {
+    max-width: 120px; /* Mobile - yeh line honi chahiye */
+  }
 }
  
 
