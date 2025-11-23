@@ -4,26 +4,44 @@ const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
-  const [users, setUsers] = useState([]); // Store registered users
+  const [currentUser, setCurrentUser] = useState(null);
+  const [registeredUsers, setRegisteredUsers] = useState([]);
 
-  const register = (email, password) => {
-    const newUser = { email, password };
-    setUsers(prev => [...prev, newUser]);
+  const register = (userData) => {
+    const newUser = { 
+      id: Date.now(), 
+      ...userData,
+      loginTime: new Date().toLocaleString()
+    };
+    setRegisteredUsers(prev => [...prev, newUser]);
+    setCurrentUser(newUser);
+    setIsLoggedIn(true);
   };
 
   const login = (email, password) => {
-    const user = users.find(u => u.email === email && u.password === password);
+    const user = registeredUsers.find(u => u.email === email && u.password === password);
     if (user) {
+      setCurrentUser({...user, loginTime: new Date().toLocaleString()});
       setIsLoggedIn(true);
       return true;
     }
     return false;
   };
 
-  const logout = () => setIsLoggedIn(false);
+  const logout = () => {
+    setIsLoggedIn(false);
+    setCurrentUser(null);
+  };
 
   return (
-    <AuthContext.Provider value={{ isLoggedIn, users, register, login, logout }}>
+    <AuthContext.Provider value={{ 
+      isLoggedIn, 
+      currentUser, 
+      registeredUsers, 
+      register, 
+      login, 
+      logout 
+    }}>
       {children}
     </AuthContext.Provider>
   );

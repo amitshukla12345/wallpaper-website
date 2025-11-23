@@ -20,50 +20,67 @@ const LoginPage = () => {
   const { register, login } = useAuth();
    const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setError('');
-    setSuccess('');
+  // LoginPage.js - handleSubmit function update karein
+const handleSubmit = (e) => {
+  e.preventDefault();
+  setError('');
+  setSuccess('');
 
-    if (!email || !password) {
+  if (!email || !password) {
+    setError('Please fill all fields');
+    return;
+  }
+
+  if (!email.includes('@')) {
+    setError('Please enter a valid email');
+    return;
+  }
+
+  if (password.length < 6) {
+    setError('Password must be at least 6 characters');
+    return;
+  }
+
+  if (isLogin) {
+  const loginSuccess = login(email, password);
+  if (loginSuccess) {
+    navigate('/dashboard'); // ✅ ADD THIS LINE
+  } else {
+    setError('Invalid email or password');
+  }
+}
+
+  if (isLogin) {
+    const loginSuccess = login(email, password);
+    if (loginSuccess) {
+      // Login successful - automatic redirect
+    } else {
+      setError('Invalid email or password');
+    }
+  } else {
+    if (!firstName || !lastName || !mobileNumber) {
       setError('Please fill all fields');
       return;
     }
 
-    if (!email.includes('@')) {
-      setError('Please enter a valid email');
-      return;
-    }
-
-    if (password.length < 6) {
-      setError('Password must be at least 6 characters');
-      return;
-    }
-
-    if (isLogin) {
-      const loginSuccess = login(email, password);
-      if (loginSuccess) {
-        alert('Login Successful!');
-      } else {
-        setError('Invalid email or password');
-      }
-    } else {
-      // Register mode mein mobile number required hai
-      if (!firstName || !lastName || !mobileNumber) {
-        setError('Please fill all fields');
-        return;
-      }
-
-      register(email, password);
-      setShowPopup(true);
-      // Clear form
-      setFirstName('');
-      setLastName('');
-      setEmail('');
-      setPassword('');
-      setMobileNumber('');
-    }
-  };
+    // ✅ Updated register call with user data
+    register({
+      firstName,
+      lastName,
+      email,
+      password,
+      mobileNumber
+    });
+    setShowPopup(true);
+    
+    // Clear form
+    setFirstName('');
+    setLastName('');
+    setEmail('');
+    setPassword('');
+    setMobileNumber('');
+  }
+};
 
   const handleHomeClick = () => {
     navigate('/'); // Home page par navigate karega
@@ -227,9 +244,16 @@ const LoginPage = () => {
                 </div>
               )}
 
-              {/* Register Page - Only REGISTER NOW button */}
+              {/* Register Page - Home + REGISTER NOW buttons */}
               {!isLogin && (
                 <div className="card-footer-register">
+                  <button 
+                    type="button" 
+                    className="home-btn"
+                    onClick={handleHomeClick}
+                  >
+                    Home
+                  </button>
                   <button type="submit" className="register-now-btn">
                     REGISTER NOW
                   </button>

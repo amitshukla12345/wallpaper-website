@@ -8,7 +8,7 @@ body {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   line-height: 1.6;
   color: #333;
-  padding-top: 100px; /* Further reduced padding for smaller logo */
+  padding-top: 0; /* removed large top padding so navbar sits at top */
 }
 
 /* Header Styles */
@@ -49,10 +49,7 @@ body {
 .logo-container {
   text-align: center;
   transition: all 0.3s ease;
-}
-
-.header.scrolled .logo-container {
-  display: none; /* Hide main logo when scrolled */
+  display: none; /* Hide the centered top logo — removed extra image/space */
 }
 
 .logo {
@@ -95,14 +92,10 @@ body {
   margin: 0;
 }
 
-/* Logo in navbar when scrolled */
+/* Make navbar logo visible by default (useful for dashboard layout) */
 .nav-logo {
-  display: none;
-}
-
-.header.scrolled .nav-logo {
   display: block;
-  margin-right: 1.5rem;
+  margin-right: 1rem;
 }
 
 .navbar-logo {
